@@ -1,0 +1,98 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply from: 'config/quality.gradle'
+apply plugin: "project-report"
+apply plugin: 'pmd'
+apply plugin: 'codenarc'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    testCompile "junit:junit:4.11"
+}
+
+task getNeededFiles(type: Copy) {
+    description 'Copy files from specified places to src/main/resources'
+    group 'CI Test Check'
+    from("E:/DinioDinev/Magistratura/3 semestur/Diplomna rabota/Needed Files for project")
+    into "src/main/resources"
+    include '*.zip'
+}
+task extractZips(type: Copy) {
+
+
+    FileTree allZips = fileTree("src/main/resources")
+    allZips.each {
+        from zipTree(it)
+        into "src/main/java/${it.name - '.zip'}"
+    }
+
+}
+/**
+ *
+ * @param nameOfFile in which we want to find specific pattern
+ * @return list with the information about file. If the file name does not follow the pattern
+ * just the name of the file is returned, otherwise name of the file, course name, faqulty number and
+ * project name
+ */
+def getInfoFromProjectName(String nameOfFile) {
+    def matcher = nameOfFile =~ /(\w+)_(\w+)_(\w+)/
+    if (matcher.matches()) {
+        matcher.findResult { fullName, courseName, faqultyNumber, projectName ->
+            [nameOfFile, courseName, faqultyNumber, projectName]
+        }
+    } else {
+        [nameOfFile]
+    }
+}
+
+task checkReadMeTxt {
+    description 'Run checks for Readme.txt file in the project'
+    tasks.getByName('check').dependsOn(checkReadMeTxt)
+    FileTree allZips = fileTree("src/main/resources")
+    allZips.findAll { sourceName ->
+        if(sourceName.name.subSequence(sourceName.name.lastIndexOf('.') + 1, sourceName.name.length()) == 'zip') {
+        FileTree zipFile = zipTree(sourceName)
+
+        zipFile.findResult {
+            if (it.name.toUpperCase() == 'README.TXT') {
+                String fileContents = it.getText('UTF-8')
+                //TODO do some working
+            } else {
+                //TODO write information into log
+                def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
+            }
+        }
+    }
+}
+}
+
+task createSourceSets {
+    FileTree allZips = fileTree("src/main/resources")
+    allZips.each { sourceName ->
+        def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
+        //Create New Source Set
+        if (fileInfo.size() == 4) {
+            sourceSets.create(fileInfo[0].capitalize()) {
+                //       output="src/build/classes/${fileInfo[1]}/${fileInfo[2]}"
+            }
+            //Do copy later than delete frim cleanSrc task
+            project.afterEvaluate{
+            project.copy {
+                from zipTree(sourceName.getAbsolutePath())
+                into "src/${fileInfo[0].capitalize()}/java/"
+            }
+            }
+        }
+    }
+}
+
+task cleanSrc(type: Delete) {
+    tasks.getByName('clean').dependsOn('cleanSrc')
+    def doNotDelete = [new File(/src\main/),new File(/src\test/)]
+    File srcDir = new File("src/")
+        delete srcDir.listFiles()-doNotDelete
+}
