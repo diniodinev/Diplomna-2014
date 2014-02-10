@@ -21,16 +21,16 @@ task getNeededFiles(type: Copy) {
     into "src/main/resources"
     include '*.zip'
 }
-task extractZips(type: Copy) {
-
-
-    FileTree allZips = fileTree("src/main/resources")
-    allZips.each {
-        from zipTree(it)
-        into "src/main/java/${it.name - '.zip'}"
-    }
-
-}
+//task extractZips(type: Copy) {
+//
+//
+//    FileTree allZips = fileTree("src/main/resources")
+//    allZips.each {
+//        from zipTree(it)
+//        into "src/main/java/${it.name - '.zip'}"
+//    }
+//
+//}
 /**
  *
  * @param nameOfFile in which we want to find specific pattern
