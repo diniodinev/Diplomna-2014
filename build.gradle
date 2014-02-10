@@ -54,20 +54,20 @@ task checkReadMeTxt {
     tasks.getByName('check').dependsOn(checkReadMeTxt)
     FileTree allZips = fileTree("src/main/resources")
     allZips.findAll { sourceName ->
-        if(sourceName.name.subSequence(sourceName.name.lastIndexOf('.') + 1, sourceName.name.length()) == 'zip') {
-        FileTree zipFile = zipTree(sourceName)
+        if (sourceName.name.subSequence(sourceName.name.lastIndexOf('.') + 1, sourceName.name.length()) == 'zip') {
+            FileTree zipFile = zipTree(sourceName)
 
-        zipFile.findResult {
-            if (it.name.toUpperCase() == 'README.TXT') {
-                String fileContents = it.getText('UTF-8')
-                //TODO do some working
-            } else {
-                //TODO write information into log
-                def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
+            zipFile.findResult {
+                if (it.name.toUpperCase() == 'README.TXT') {
+                    String fileContents = it.getText('UTF-8')
+                    //TODO do some working
+                } else {
+                    //TODO write information into log
+                    def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
+                }
             }
         }
     }
-}
 }
 
 task createSourceSets {
@@ -80,11 +80,11 @@ task createSourceSets {
                 //       output="src/build/classes/${fileInfo[1]}/${fileInfo[2]}"
             }
             //Do copy later than delete frim cleanSrc task
-            project.afterEvaluate{
-            project.copy {
-                from zipTree(sourceName.getAbsolutePath())
-                into "src/${fileInfo[0].capitalize()}/java/"
-            }
+            doLast {
+                project.copy {
+                    from zipTree(sourceName.getAbsolutePath())
+                    into "src/${fileInfo[0].capitalize()}/java/"
+                }
             }
         }
     }
@@ -92,7 +92,7 @@ task createSourceSets {
 
 task cleanSrc(type: Delete) {
     tasks.getByName('clean').dependsOn('cleanSrc')
-    def doNotDelete = [new File(/src\main/),new File(/src\test/)]
+    def doNotDelete = [new File(/src\main/), new File(/src\test/)]
     File srcDir = new File("src/")
-        delete srcDir.listFiles()-doNotDelete
+    delete srcDir.listFiles() - doNotDelete
 }
