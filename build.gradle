@@ -5,6 +5,7 @@ apply plugin: "project-report"
 apply plugin: 'pmd'
 apply plugin: 'codenarc'
 
+apply plugin: 'fmi-java'
 repositories {
     mavenCentral()
 }
