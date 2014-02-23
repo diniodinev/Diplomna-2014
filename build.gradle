@@ -1,4 +1,3 @@
-apply plugin: 'java'
 apply plugin: 'idea'
 apply from: 'config/quality.gradle'
 apply plugin: "project-report"
@@ -6,6 +5,10 @@ apply plugin: 'pmd'
 apply plugin: 'codenarc'
 
 apply plugin: 'fmi-java'
+
+sourceCompatibility='1.5'
+targetCompatibility='1.5'
+
 repositories {
     mavenCentral()
 }
@@ -14,6 +17,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.5'
     testCompile "junit:junit:4.11"
 }
+
 
 task getNeededFiles(type: Copy) {
     description 'Copy files from specified places to src/main/resources'
@@ -91,9 +95,14 @@ task createSourceSets {
     }
 }
 
-task cleanSrc(type: Delete) {
-    tasks.getByName('clean').dependsOn('cleanSrc')
-    def doNotDelete = [new File(/src\main/), new File(/src\test/)]
-    File srcDir = new File("src/")
-    delete srcDir.listFiles() - doNotDelete
+//task cleanSrc(type: Delete) {
+//    tasks.getByName('clean').dependsOn('cleanSrc')
+//    def doNotDelete = [new File(/src\main/), new File(/src\test/)]
+//    File srcDir = new File("src/")
+//    delete srcDir.listFiles() - doNotDelete
+//}
+
+task tra<<{
+    println FN.filePattern
+
 }
