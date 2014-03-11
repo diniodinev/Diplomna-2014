@@ -4,28 +4,16 @@ apply plugin: "project-report"
 apply plugin: 'pmd'
 apply plugin: 'codenarc'
 
-apply plugin: 'fmi-java'
-
-sourceCompatibility='1.5'
-targetCompatibility='1.5'
+//create conf property with default value
+if(!project.hasProperty('conf')){
+    ext.conf='default'
+}
+apply from: "config/specifications/${project.ext.conf}.gradle"
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.5'
-    testCompile "junit:junit:4.11"
-}
-
-
-task getNeededFiles(type: Copy) {
-    description 'Copy files from specified places to src/main/resources'
-    group 'CI Test Check'
-    from("E:/DinioDinev/Magistratura/3 semestur/Diplomna rabota/Needed Files for project")
-    into "src/main/resources"
-    include '*.zip'
-}
 //task extractZips(type: Copy) {
 //
 //
@@ -43,57 +31,57 @@ task getNeededFiles(type: Copy) {
  * just the name of the file is returned, otherwise name of the file, course name, faqulty number and
  * project name
  */
-def getInfoFromProjectName(String nameOfFile) {
-    def matcher = nameOfFile =~ /(\w+)_(\w+)_(\w+)/
-    if (matcher.matches()) {
-        matcher.findResult { fullName, courseName, faqultyNumber, projectName ->
-            [nameOfFile, courseName, faqultyNumber, projectName]
-        }
-    } else {
-        [nameOfFile]
-    }
-}
+//def getInfoFromProjectName(String nameOfFile) {
+//    def matcher = nameOfFile =~ /(\w+)_(\w+)_(\w+)/
+//    if (matcher.matches()) {
+//        matcher.findResult { fullName, courseName, faqultyNumber, projectName ->
+//            [nameOfFile, courseName, faqultyNumber, projectName]
+//        }
+//    } else {
+//        [nameOfFile]
+//    }
+//}
+//
+//task checkReadMeTxt {
+//    description 'Run checks for Readme.txt file in the project'
+//    tasks.getByName('check').dependsOn(checkReadMeTxt)
+//    FileTree allZips = fileTree("src/main/resources")
+//    allZips.findAll { sourceName ->
+//        if (sourceName.name.subSequence(sourceName.name.lastIndexOf('.') + 1, sourceName.name.length()) == 'zip') {
+//            FileTree zipFile = zipTree(sourceName)
+//
+//            zipFile.findResult {
+//                if (it.name.toUpperCase() == 'README.TXT') {
+//                    String fileContents = it.getText('UTF-8')
+//                    //TODO do some working
+//                } else {
+//                    //TODO write information into log
+//                    def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
+//                }
+//            }
+//        }
+//    }
+//}
 
-task checkReadMeTxt {
-    description 'Run checks for Readme.txt file in the project'
-    tasks.getByName('check').dependsOn(checkReadMeTxt)
-    FileTree allZips = fileTree("src/main/resources")
-    allZips.findAll { sourceName ->
-        if (sourceName.name.subSequence(sourceName.name.lastIndexOf('.') + 1, sourceName.name.length()) == 'zip') {
-            FileTree zipFile = zipTree(sourceName)
-
-            zipFile.findResult {
-                if (it.name.toUpperCase() == 'README.TXT') {
-                    String fileContents = it.getText('UTF-8')
-                    //TODO do some working
-                } else {
-                    //TODO write information into log
-                    def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
-                }
-            }
-        }
-    }
-}
-
-task createSourceSets {
-    FileTree allZips = fileTree("src/main/resources")
-    allZips.each { sourceName ->
-        def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
-        //Create New Source Set
-        if (fileInfo.size() == 4) {
-            sourceSets.create(fileInfo[0].capitalize()) {
-                //       output="src/build/classes/${fileInfo[1]}/${fileInfo[2]}"
-            }
-            //Do copy later than delete frim cleanSrc task
-            doLast {
-                project.copy {
-                    from zipTree(sourceName.getAbsolutePath())
-                    into "src/${fileInfo[0].capitalize()}/java/"
-                }
-            }
-        }
-    }
-}
+//task createSourceSets {
+//    FileTree allZips = fileTree("src/main/resources")
+//    allZips.each { sourceName ->
+//        def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
+//        //Create New Source Set
+//        if (fileInfo.size() == 4) {
+//            sourceSets.create(fileInfo[0].capitalize()) {
+//                //       output="src/build/classes/${fileInfo[1]}/${fileInfo[2]}"
+//            }
+//            //Do copy later than delete frim cleanSrc task
+//            doLast {
+//                project.copy {
+//                    from zipTree(sourceName.getAbsolutePath())
+//                    into "src/${fileInfo[0].capitalize()}/java/"
+//                }
+//            }
+//        }
+//    }
+//}
 
 //task cleanSrc(type: Delete) {
 //    tasks.getByName('clean').dependsOn('cleanSrc')
@@ -102,7 +90,4 @@ task createSourceSets {
 //    delete srcDir.listFiles() - doNotDelete
 //}
 
-task tra<<{
-    println FN.filePattern
 
-}

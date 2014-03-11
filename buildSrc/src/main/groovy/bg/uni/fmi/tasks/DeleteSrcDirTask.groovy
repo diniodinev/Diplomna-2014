@@ -7,17 +7,26 @@ import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Optional
 import org.gradle.api.file.FileCollection
 import org.gradle.api.file.FileTree
+import org.gradle.api.tasks.Delete;
 
-public class DeleteSrcDirTask extends DefaultTask {
-    @InputFiles @Optional
-    FileCollection filesToDelete = project.fileTree(/src/).matching {
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.internal.ConventionTask;
+
+import static bg.uni.fmi.plugins.FMIJavaPlugin.GET_INFO_TASK_NAME
+
+public class DeleteSrcDirTask extends Delete {
+    @InputFiles
+    @Optional
+    FileCollection filesToDelete = project.fileTree(project.tasks.getByName(GET_INFO_TASK_NAME).outputDir).matching {
         exclude "main", "test"
     }
 
     @TaskAction
     def cleanSrc() {
-        filesToDelete.each {
-            project.delete(it)
+        filesToDelete.each{
+            println it.absolutePath
         }
+        setDelete(filesToDelete)
+        clean()
     }
 }

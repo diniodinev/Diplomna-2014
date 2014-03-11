@@ -3,6 +3,6 @@ apply plugin: 'groovy'
 repositories{
     mavenCentral()
 }
-//dependencies {
-//    gradleApi gradleApi()
-//}
+dependencies {
+    compile 'commons-io:commons-io:2.4'
+}
