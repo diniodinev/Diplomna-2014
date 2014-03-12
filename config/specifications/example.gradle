@@ -4,8 +4,6 @@ sourceCompatibility='1.5'
 targetCompatibility='1.5'
 
 getInfo{
-    filePattern = /(\w+)_(\w+)_(\w+)/
-    nameOfFile="NetJava2012_M24133_FinalProject"
     courseName = "OOP_Java"
     sourceFiles = files(/E:\DinioDinev\Magistratura\3 semestur\Diplomna rabota\Project\src\main\resources/)
 }

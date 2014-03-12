@@ -12,11 +12,6 @@ import org.gradle.api.GradleException;
 
 public class GetInfoFromProjectFilesTask extends DefaultTask {
     static final String ARCHIVE_TYPE = 'zip'
-    @Input
-    String nameOfFile
-
-    @Input
-    String filePattern = /(\w+)_(\w+)_(\w+)/
 
     @Input
     FileCollection sourceFiles
