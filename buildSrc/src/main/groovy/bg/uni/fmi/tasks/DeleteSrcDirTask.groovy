@@ -17,18 +17,16 @@ import static bg.uni.fmi.plugins.FMIJavaPlugin.GET_INFO_TASK_NAME
 
 public class DeleteSrcDirTask extends Delete {
 
-    @InputFiles
     def filesToDelete = []
     def getInfoTask = project.tasks.getByName(GET_INFO_TASK_NAME)
 
     DeleteSrcDirTask() {
-        //We must configure filesToDelete in after evaluate phase because becore that we do not have
+        //We must configure filesToDelete in after evaluate phase because that we do not have
         //courseName property
         project.afterEvaluate {
-            String outputPath = "${getInfoTask.outputDir}/${getInfoTask.courseName}"
+            String outputPath = "${getInfoTask.outputDir}"
             FileCollection filesTo = project.fileTree(outputPath).visit { FileVisitDetails details ->
                 filesToDelete << details.file.path
-                println details.file.path
             }
             filesToDelete << outputPath
         }
