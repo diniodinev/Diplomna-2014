@@ -1,8 +1,12 @@
 apply plugin: 'groovy'
+apply plugin: 'java'
+
+
 
 repositories{
     mavenCentral()
 }
 dependencies {
     compile 'commons-io:commons-io:2.4'
+    compile  'com.dropbox.core:dropbox-core-sdk:1.7.6'
 }

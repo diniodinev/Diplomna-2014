@@ -8,13 +8,13 @@ import java.util.regex.Pattern
 import org.gradle.api.file.FileTree
 import bg.uni.fmi.tasks.GetInfoFromProjectFilesTask
 import bg.uni.fmi.tasks.DeleteSrcDirTask
-import bg.uni.fmi.tasks.CreateSourceSets
+import bg.uni.fmi.tasks.UploadDropBoxTask
 
 
 class FMIJavaPlugin implements Plugin<Project> {
     public static final String DELETE_SRC_TASK = "deleteSrc"
     public static final String GET_INFO_TASK_NAME = "getInfo"
-    public static final String CREATE_SOURCE_SETS_TASK_NAME = "createSourceSets"
+    public static final String UPLOAD_DROPBOX_FILES = "uploadDropbox"
     public static final String FMI_PLUGIN_EXTENSION_NAME = "FN"
 
     void apply(Project project) {
@@ -39,13 +39,14 @@ class FMIJavaPlugin implements Plugin<Project> {
         GetInfoFromProjectFilesTask getInfoTask = project.task(GET_INFO_TASK_NAME, type: GetInfoFromProjectFilesTask)
         getInfoTask.setDescription('Get information for archive files which will be used for analysis.')
         getInfoTask.setGroup('analysis')
+
         DeleteSrcDirTask deleteSrcDirTask = project.task(DELETE_SRC_TASK, type: DeleteSrcDirTask)
         deleteSrcDirTask.setDescription('Delete output dir for the project.')
         deleteSrcDirTask.setGroup('analysis')
-        CreateSourceSets createSourceSets = project.task(CREATE_SOURCE_SETS_TASK_NAME, type: CreateSourceSets)
-        createSourceSets.setDescription('Create source set for all projects in the outputDir.')
-        createSourceSets.setGroup('analysis')
-        createSourceSets.dependsOn(getInfoTask)
+
+        UploadDropBoxTask uploadDropBoxTask = project.task(UPLOAD_DROPBOX_FILES, type: UploadDropBoxTask)
+        uploadDropBoxTask.setDescription('Upload files to DropBox account.')
+        uploadDropBoxTask.setGroup('upload')
 
     }
 

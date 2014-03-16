@@ -1,11 +1,18 @@
 apply plugin: 'fmi-java'
 
-sourceCompatibility='1.5'
-targetCompatibility='1.5'
+sourceCompatibility = '1.5'
+targetCompatibility = '1.5'
 
-getInfo{
+getInfo {
     courseName = "OOP_Java"
     sourceFiles = files(/E:\DinioDinev\Magistratura\3 semestur\Diplomna rabota\Project\src\main\resources/)
     //outputDir= "bin"
+}
+uploadDropbox {
+    //Here TOKEN is a property added in userhome/.gradle/gradle.properties file which is visible only for the server
+    //It has to be changed with current Dropbox token.
+    authFile = TOKEN
+    dropboxPath = "/build.gradle"
+    localPath "${project.file("build.gradle").absolutePath}"
 }
 
