@@ -23,18 +23,20 @@ import com.dropbox.core.DbxException
 import com.dropbox.core.DbxEntry
 import java.io.InputStream
 import java.util.Locale
-
-import static bg.uni.fmi.plugins.FMIJavaPlugin.GET_INFO_TASK_NAME
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
 
 public class UploadDropBoxTask extends DefaultTask {
 
+    String DATE_PATTERN_FOR_DIRECTORIES = "yyyy-MM-dd-kk-mm-ss"
     //Path to the file where is the token key
     @Input
     String authFile
 
-    //where to upload the file
+    //what the name of file would be on dropbox server
     @Input
-    String dropboxPath
+    String dropboxName
 
     //local path
     @Input
@@ -60,7 +62,7 @@ public class UploadDropBoxTask extends DefaultTask {
     }
 
     def checkDropboxUploadPath() {
-        String pathError = DbxPath.findError(dropboxPath);
+        String pathError = DbxPath.findError(generateDropboxPath());
         if (pathError != null) {
             throw new org.gradle.api.GradleException("Invalid <dropbox-path>: " + pathError);
         }
@@ -73,11 +75,10 @@ public class UploadDropBoxTask extends DefaultTask {
 
         // Make the API call to upload the file.
         DbxEntry.File metadata;
-        String errorMessage="dadsad"
         try {
             InputStream input = new FileInputStream(localPath)
             try {
-                metadata = dbxClient.uploadFile(dropboxPath, DbxWriteMode.add(), -1, input);
+                metadata = dbxClient.uploadFile(generateDropboxPath(), DbxWriteMode.add(), -1, input);
             } catch (DbxException ex) {
                 throw new org.gradle.api.GradleException("Error uploading to Dropbox: " + ex.getMessage())
             } finally {
@@ -87,6 +88,29 @@ public class UploadDropBoxTask extends DefaultTask {
         catch (IOException ex) {
             throw new org.gradle.api.GradleException("Error reading from file \"" + localPath + "\": " + ex.getMessage());
         }
+    }
+
+    /**
+     * Generate path for the directory in DropBox. If the name of course is specified then the directory will be
+     * courseName/date/dropboxName
+     * Were date will be in format yyyy-MM-dd-kk-mm-ss
+     * @return generated path for file in DropBox
+     */
+    String generateDropboxPath() {
+        StringBuilder dirName = new StringBuilder();
+
+        dirName.append('/')
+        String course = project.tasks.getByName("getInfo").courseName
+        if (course!=null) {
+            dirName.append("${course}/")
+        }
+
+        DateTime dt = new DateTime();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(DATE_PATTERN_FOR_DIRECTORIES);
+        dirName.append(fmt.print(dt));
+        dirName.append('/')
+        dirName.append(dropboxName)
+        dirName.toString()
     }
 
 }

@@ -20,6 +20,7 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
     @Input
     @Optional
     String outputDir = "src"
+    //TODO add for File
 
     @Input
     @Optional
@@ -27,6 +28,9 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
 
     def GetInfoFromProjectFilesTask() {
         project.afterEvaluate {
+            if (courseName==null) {
+                courseName=project.ext.conf
+            }
             if (outputDir.equals('src')) {
                 outputDir = "${outputDir}/${courseName}/"
             }
@@ -69,19 +73,18 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
     def checkTypeExtention(File file, String extension) {
         if (!extension.equals(ARCHIVE_TYPE)) {
             throw new GradleException("The file ${file.getAbsolutePath()} is with incompatible extension type \"${extension}\". The appropriate " +
-                    "extension is \"${ARCHIVE_TYPE}\". ")
+                    "extension is \"${ARCHIVE_TYPE}\".")
         }
     }
 
     def extractFiles(File file, String extension) {
-        if (courseName == null) {
-            courseName = project.ext.conf
-        }
+//        if (courseName == null) {
+//            courseName = project.ext.conf
+//        }
         project.copy {
             from project.zipTree(file.getAbsolutePath())
             into "${outputDir}/${file.getName()}" - ".${extension}"
         }
-
     }
 
     def createSourceSets(File file, String extension) {

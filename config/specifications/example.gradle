@@ -4,7 +4,7 @@ sourceCompatibility = '1.5'
 targetCompatibility = '1.5'
 
 getInfo {
-    courseName = "OOP_Java"
+    //courseName = "OOP_Java"
     sourceFiles = files(/E:\DinioDinev\Magistratura\3 semestur\Diplomna rabota\Project\src\main\resources/)
     //outputDir= "bin"
 }
@@ -12,7 +12,9 @@ uploadDropbox {
     //Here TOKEN is a property added in userhome/.gradle/gradle.properties file which is visible only for the server
     //It has to be changed with current Dropbox token.
     authFile = TOKEN
-    dropboxPath = "/build.gradle"
+    dropboxName = "build.gradle"
     localPath "${project.file("build.gradle").absolutePath}"
 }
-
+dependencies{
+    compile 'junit:junit:4.11'
+}

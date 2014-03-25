@@ -3,10 +3,22 @@ apply plugin: 'java'
 
 
 
-repositories{
+repositories {
     mavenCentral()
 }
 dependencies {
+    compile localGroovy()
     compile 'commons-io:commons-io:2.4'
-    compile  'com.dropbox.core:dropbox-core-sdk:1.7.6'
+    compile 'com.dropbox.core:dropbox-core-sdk:1.7.6'
+    compile 'joda-time:joda-time:2.3'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-1.8'
+    testCompile 'junit:junit:4.11'
 }
+sourceSets {
+    test {
+        resources {
+          //  srcDir 'resources/test'
+        }
+    }
+}
+//println  sourceSets.test.resources.srcDirs.path
