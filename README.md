@@ -67,7 +67,7 @@ apply plugin: 'fmi-java'
 
 getInfo {
     courseName = "OOP_Java"
-    sourceFiles = files(/E:\DinioDinev\Magistratura\3 semestur\Diplomna rabota\Project\src\main\resources/)
+    sourceFiles = files(/C:\main\resources/)
     outputDir= "bin"
 }
 ```
