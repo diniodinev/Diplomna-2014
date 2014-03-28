@@ -1,6 +1,36 @@
 apply plugin:'fmi-www'
-task one{
-    project.plugins.each {
-        println it.class
+
+problems{
+    numbers{
+        problemSolution="10.0+7.0=17.0<BR/>\r\n" +
+                "10.0-7.0=3.0<BR/>\r\n"+
+                "10.0*7.0=70.0<BR/>\r\n" +
+                "10.0/7.0=1.4285714285714286<BR/>\r\n" +
+                "10.0%7.0=3.0<BR/>"
+    }
+    zad2{
+        problemSolution="abc abc abc abc abc abc abc abc abc <BR/>" +
+                "xyz xyz xyz xyz xyz xyz xyz xyz xyz <BR/>" +
+                "1 2 3 4 5 6 7 8 9 <BR/>" +
+                "1. Item A<BR/>" +
+                "2. Item B<BR/>" +
+                "3. Item C<BR/>" +
+                "4. Item D<BR/>" +
+                "5. Item E<BR/>" +
+                "6. Item F<BR/>"
+    }
+    squares{
+        problemSolution="1<BR/>4<BR/>9<BR/>16<BR/>25<BR/>36<BR/>49<BR/>64<BR/>81<BR/>100<BR/>121<BR/>144<BR/>"
+    }
+    towns{
+        problemSolution="Tokyo, Mexixo City, New York City, Mumbai, Seoul, Shanghai, Lagos"
+    }
+}
+checkProblems{
+    url = "http://localhost:8080/hello.jsp"
+}
+task one<<{
+    problems.each{
+        println it.name + " " + it.problemSolution + "I za wseki negowiq URL="+it.url
     }
 }

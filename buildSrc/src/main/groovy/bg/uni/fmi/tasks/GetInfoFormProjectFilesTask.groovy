@@ -1,4 +1,4 @@
-package bg.uni.fmi.tasks;
+package bg.uni.fmi.tasks
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -8,7 +8,7 @@ import org.gradle.api.tasks.Optional
 import org.gradle.api.file.FileCollection
 import org.gradle.api.file.FileTree
 import org.apache.commons.io.FilenameUtils
-import org.gradle.api.GradleException;
+import org.gradle.api.GradleException
 
 public class GetInfoFromProjectFilesTask extends DefaultTask {
     static final String ARCHIVE_TYPE = 'zip'
