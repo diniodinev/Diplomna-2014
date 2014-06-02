@@ -39,6 +39,7 @@ class FMIJavaPlugin implements Plugin<Project> {
         GetInfoFromProjectFilesTask getInfoTask = project.task(GET_INFO_TASK_NAME, type: GetInfoFromProjectFilesTask)
         getInfoTask.setDescription('Get information for archive files which will be used for analysis.')
         getInfoTask.setGroup('analysis')
+        //project.tasks.getByName('build').dependsOn(GET_INFO_TASK_NAME)
 
         DeleteSrcDirTask deleteSrcDirTask = project.task(DELETE_SRC_TASK, type: DeleteSrcDirTask)
         deleteSrcDirTask.setDescription('Delete output dir for the project.')

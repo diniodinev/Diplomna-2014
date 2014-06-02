@@ -69,7 +69,7 @@ public class GetInfoFromProjectFilesTaskTest extends Specification {
     def "check createSourceSets()"() {
         when:
         project.apply(plugin: 'fmi-java')
-        getInfoTask.createSourceSets(project.file(new File('').absolutePath + "/src/test/resources/bg/uni/fmi/tasks/UDP2012_M66666_FinalProject.zip"), 'zip')
+        getInfoTask.createSourceSets(project.file(new File('').absolutePath + "/plugins/src/test/resources/bg/uni/fmi/tasks/UDP2012_M66666_FinalProject.zip"), 'zip')
         Set s1 = ["${getInfoTask.outputDir}"+"UDP2012_M66666_FinalProject"]
         then:
         assert project.sourceSets.find{

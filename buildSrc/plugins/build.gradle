@@ -2,12 +2,13 @@ apply plugin: 'groovy'
 apply plugin: 'java'
 
 
+
 repositories {
     mavenCentral()
 }
 dependencies {
-	
     compile localGroovy()
+	compile gradleApi()
     compile 'commons-io:commons-io:2.4'
     compile 'com.dropbox.core:dropbox-core-sdk:1.7.6'
     compile 'joda-time:joda-time:2.3'
@@ -17,17 +18,4 @@ dependencies {
     compile 'com.rockymadden.stringmetric:stringmetric-core_2.10:0.27.3'
     testCompile 'org.spockframework:spock-core:0.7-groovy-1.8'
     testCompile 'junit:junit:4.11'
-	
-	//Add  all subprojects as runtime dependencies to the root buildSrc project. 
-	runtime subprojects.collect { owner.project(it.path) }
-     runtime ('com.uwyn:jhighlight:1.0') {
-        exclude module: "servlet-api"
-    }
-}
-sourceSets {
-    test {
-        resources {
-          //  srcDir 'resources/test'
-        }
-    }
 }
