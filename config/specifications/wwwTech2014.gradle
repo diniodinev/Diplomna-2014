@@ -2,6 +2,7 @@ apply plugin:'fmi-www'
 
 problems{
     numbers{
+        url = "http://localhost:8080/hello.jsp"
         problemSolution="10.0+7.0=17.0<BR/>\r\n" +
                 "10.0-7.0=3.0<BR/>\r\n"+
                 "10.0*7.0=70.0<BR/>\r\n" +
