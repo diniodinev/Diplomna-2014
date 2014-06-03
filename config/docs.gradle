@@ -20,6 +20,7 @@ apply plugin: "jsoup"
 	task concatPartsMd(type: FileConcatTask) {
         source (fileTree("src/main/parts") { include "*.md" })
         destination "$buildDir/parts.md"
+		destination "README.md"
         joiner "\n\n"
     }
 
