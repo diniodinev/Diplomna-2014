@@ -1,0 +1,78 @@
+import org.gradle.plugins.jsoup.Jsoup
+import org.gradle.plugins.pegdown.PegDown
+import org.gradle.plugins.xhtmlrenderer.XhtmlToPdf
+
+apply plugin: "base"
+apply plugin: "pegdown"
+apply plugin: "xhtmlrenderer"
+apply plugin: "jsoup"
+
+
+// Common output settings for all html transforms
+    tasks.withType(Jsoup) {
+        destination "$buildDir/html/${name}.html"
+        inputEncoding "utf-8"
+        transform {
+            outputSettings().indentAmount(2).prettyPrint(true)
+        }
+    }
+	
+	task concatPartsMd(type: FileConcatTask) {
+        source (fileTree("src/main/parts") { include "*.md" })
+        destination "$buildDir/parts.md"
+        joiner "\n\n"
+    }
+
+    task rawHtml(type: PegDown) {
+        source concatPartsMd
+        destination "$buildDir/html/parts-raw.html"
+    }
+	
+	["base"].each { transformType ->
+        task ("${transformType}Html", type: Jsoup) { task ->
+            def path = "src/main/transforms/${transformType}.groovy"
+
+            def global = "$rootDir/$path"
+            inputs.file global
+            apply from: global, to: task
+
+            def local = "$projectDir/$path"
+            if (file(local).exists()) {
+                inputs.file local
+                apply from: local, to: task
+            }
+			doLast{
+				println "Documentation is generated in:\n $buildDir/html/${name}.html"
+			}
+			
+        }
+    }
+	//println "Documentation is generated in:\n $buildDir/html/${name}.html")
+	 baseHtml.source rawHtml
+	 task copyStyles(type:Copy){
+	     from 'src/main/style'
+		 into 'build/html/style'
+	 }
+	 
+	 baseHtml.dependsOn(copyStyles)
+	
+
+	class FileConcatTask extends SourceTask {
+    @Input @Optional String joiner
+
+    private destination
+    @OutputFile File getDestination() { project.file(destination) }
+    void setDestination(destination) { this.destination = destination }
+
+    @TaskAction
+    void doFileConcat() {
+        getDestination().withOutputStream { out ->
+            getSource().files.sort { it.name }.each {
+                it.withInputStream { out << it }
+                if (joiner) {
+                    out << joiner
+                }
+            }
+        }
+    }
+}

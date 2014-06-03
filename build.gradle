@@ -1,5 +1,7 @@
 apply plugin: 'idea'
 apply from: 'config/quality.gradle'
+//Functionality for documentation
+apply from: 'config/docs.gradle'
 apply plugin: "project-report"
 apply plugin: 'pmd'
 apply plugin: 'codenarc'

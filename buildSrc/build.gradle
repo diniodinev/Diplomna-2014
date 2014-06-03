@@ -20,7 +20,7 @@ dependencies {
 	
 	//Add  all subprojects as runtime dependencies to the root buildSrc project. 
 	runtime subprojects.collect { owner.project(it.path) }
-     runtime ('com.uwyn:jhighlight:1.0') {
+    runtime ('com.uwyn:jhighlight:1.0') {
         exclude module: "servlet-api"
     }
 }
