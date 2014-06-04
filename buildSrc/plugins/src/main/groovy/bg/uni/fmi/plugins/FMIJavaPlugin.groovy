@@ -21,25 +21,12 @@ class FMIJavaPlugin implements Plugin<Project> {
         project.getPlugins().apply(JavaPlugin.class);
         ArtifactNameExtension extension = project.extensions.create(FMI_PLUGIN_EXTENSION_NAME, ArtifactNameExtension, project)
 
-        project.afterEvaluate {
-//            extension.sourceFiles.getFiles().each {
-//                if (it.isFile()) {
-//                    println "File"
-//                } else {
-//                    FileTree fileTree = project.fileTree(it)
-//                    fileTree.each {
-//                        println it
-//                    }
-//                }
-//
-//            }
-
-        }
-
         GetInfoFromProjectFilesTask getInfoTask = project.task(GET_INFO_TASK_NAME, type: GetInfoFromProjectFilesTask)
         getInfoTask.setDescription('Get information for archive files which will be used for analysis.')
         getInfoTask.setGroup('analysis')
+
         //project.tasks.getByName('build').dependsOn(GET_INFO_TASK_NAME)
+        project.tasks.getByName('clean').dependsOn(DELETE_SRC_TASK)
 
         DeleteSrcDirTask deleteSrcDirTask = project.task(DELETE_SRC_TASK, type: DeleteSrcDirTask)
         deleteSrcDirTask.setDescription('Delete output dir for the project.')
@@ -50,19 +37,4 @@ class FMIJavaPlugin implements Plugin<Project> {
         uploadDropBoxTask.setGroup('upload')
 
     }
-
-//    def getInfoFromProjectFiles(ArtifactNameExtention extention) {
-//        def nameOfFile = /NetJava2012_M24133_FinalProject/
-//        def matcher = nameOfFile =~ extention.filePattern
-//        if (matcher.matches()) {
-//            matcher.findResult { fullName, courseName, faqultyNumber, projectName ->
-//                [nameOfFile, courseName, faqultyNumber, projectName]
-//            }
-//        } else {
-//            [nameOfFile]
-//        }
-//    }
-
-
-
 }

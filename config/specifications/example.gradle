@@ -1,20 +1,20 @@
-apply plugin: 'fmi-java'
+task checkReadMeTxt {
+    description 'Run checks for Readme.txt file in the project'
+    tasks.getByName('check').dependsOn(checkReadMeTxt)
+    FileTree allZips = fileTree("src/main/resources")
+    allZips.findAll { sourceName ->
+        if (sourceName.name.subSequence(sourceName.name.lastIndexOf('.') + 1, sourceName.name.length()) == 'zip') {
+            FileTree zipFile = zipTree(sourceName)
 
-sourceCompatibility = '1.5'
-targetCompatibility = '1.5'
-
-getInfo {
-    //courseName = "OOP_Java"
-    sourceFiles = files(/E:\DinioDinev\Magistratura\3 semestur\Diplomna rabota\Project\src\main\resources/)
-    //outputDir= "bin"
-}
-uploadDropbox {
-    //Here TOKEN is a property added in userhome/.gradle/gradle.properties file which is visible only for the server
-    //It has to be changed with current Dropbox token.
-    authFile = TOKEN
-    dropboxName = "build.gradle"
-    localPath "${project.file("build.gradle").absolutePath}"
-}
-dependencies{
-    compile 'junit:junit:4.11'
+            zipFile.findResult {
+                if (it.name.toUpperCase() == 'README.TXT') {
+                    String fileContents = it.getText('UTF-8')
+                    //TODO do some working
+                } else {
+                    //TODO write information into log
+                    def fileInfo = getInfoFromProjectName(sourceName.name - '.zip')
+                }
+            }
+        }
+    }
 }
