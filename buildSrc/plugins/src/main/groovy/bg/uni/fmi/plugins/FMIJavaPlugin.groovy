@@ -38,6 +38,5 @@ class FMIJavaPlugin implements Plugin<Project> {
         SendEmailsTask sendEmailsTask = project.task(SEND_EAMIL, type: SendEmailsTask)
         uploadDropBoxTask.setDescription('Send email.')
         uploadDropBoxTask.setGroup('upload')
-
     }
 }

@@ -46,7 +46,7 @@ class SendEmailsTask extends DefaultTask {
         InternetAddress[] to = new InternetAddress[emailTos.size()];
         to = (InternetAddress[]) emailTos.toArray(to);
         msg.setRecipients(MimeMessage.RecipientType.TO,to);
-       msg.setSubject(subject);
+        msg.setSubject(subject);
         msg.setText(message)
 
         Transport transporter = lSession.getTransport("smtp");
