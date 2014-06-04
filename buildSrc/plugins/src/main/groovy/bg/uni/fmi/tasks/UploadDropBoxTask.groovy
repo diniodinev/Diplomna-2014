@@ -34,19 +34,14 @@ public class UploadDropBoxTask extends DefaultTask {
     @Input
     String authFile
 
-    //what the name of file would be on dropbox server
-    @Input
-    String dropboxName
-
     //local path
     @Input
-    String localPath
+    def localFilesToUpload
 
     @TaskAction
     def uploadDropBoxTask() {
         DbxAuthInfo autoInfo = readAuthInfoFille()
-        checkDropboxUploadPath()
-        uploadFile(autoInfo)
+        uploadFiles(autoInfo)
     }
 
     DbxAuthInfo readAuthInfoFille() {
@@ -61,14 +56,28 @@ public class UploadDropBoxTask extends DefaultTask {
         authInfo
     }
 
-    def checkDropboxUploadPath() {
-        String pathError = DbxPath.findError(generateDropboxPath());
+    def checkDropboxUploadPath(def fileNameOnDropbox) {
+        String pathError = DbxPath.findError(generateDropboxPath(fileNameOnDropbox));
         if (pathError != null) {
             throw new org.gradle.api.GradleException("Invalid <dropbox-path>: " + pathError);
         }
     }
 
-    def uploadFile(DbxAuthInfo authInfo) {
+    def uploadFiles(DbxAuthInfo authInfo) {
+        File item = new File(localFilesToUpload)
+        if(item.isFile()){
+            checkDropboxUploadPath(generateDropboxPath(item.getName()))
+            uploadFile(authInfo,localFilesToUpload, generateDropboxPath(item.getName()))
+        }else{
+            def rootPathToUploadIn = generateDropboxPath("")
+            project.fileTree(new File(localFilesToUpload)).each {fileToUpload ->
+                def dirToUpload = fileToUpload.getParent()- localFilesToUpload
+                uploadFile(authInfo,fileToUpload,rootPathToUploadIn+'/'+dirToUpload.replace("\\","/")+'/'+ fileToUpload.getName())
+            }
+        }
+    }
+
+    def uploadFile(DbxAuthInfo authInfo, def localFile, def pathToUpload) {
         String userLocale = Locale.getDefault().toString();
         DbxRequestConfig requestConfig = new DbxRequestConfig("project-upload", userLocale);
         DbxClient dbxClient = new DbxClient(requestConfig, authInfo.accessToken, authInfo.host);
@@ -76,9 +85,9 @@ public class UploadDropBoxTask extends DefaultTask {
         // Make the API call to upload the file.
         DbxEntry.File metadata;
         try {
-            InputStream input = new FileInputStream(localPath)
+            InputStream input = new FileInputStream(localFile)
             try {
-                metadata = dbxClient.uploadFile(generateDropboxPath(), DbxWriteMode.add(), -1, input);
+                metadata = dbxClient.uploadFile(pathToUpload, DbxWriteMode.add(), -1, input);
             } catch (DbxException ex) {
                 throw new org.gradle.api.GradleException("Error uploading to Dropbox: " + ex.getMessage())
             } finally {
@@ -86,17 +95,17 @@ public class UploadDropBoxTask extends DefaultTask {
             }
         }
         catch (IOException ex) {
-            throw new org.gradle.api.GradleException("Error reading from file \"" + localPath + "\": " + ex.getMessage());
+            throw new org.gradle.api.GradleException("Error reading from file \"" + localFile + "\": " + ex.getMessage());
         }
     }
 
     /**
      * Generate path for the directory in DropBox. If the name of course is specified then the directory will be
-     * courseName/date/dropboxName
+     * courseName/date/itemToUpload
      * Were date will be in format yyyy-MM-dd-kk-mm-ss
      * @return generated path for file in DropBox
      */
-    String generateDropboxPath() {
+    String generateDropboxPath(String fileNameInDropbox) {
         StringBuilder dirName = new StringBuilder();
 
         dirName.append('/')
@@ -109,7 +118,7 @@ public class UploadDropBoxTask extends DefaultTask {
         DateTimeFormatter fmt = DateTimeFormat.forPattern(DATE_PATTERN_FOR_DIRECTORIES);
         dirName.append(fmt.print(dt));
         dirName.append('/')
-        dirName.append(dropboxName)
+        dirName.append(fileNameInDropbox)
         dirName.toString()
     }
 

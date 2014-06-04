@@ -12,9 +12,16 @@ uploadDropbox {
     //Here TOKEN is a property added in userhome/.gradle/gradle.properties file which is visible only for the server
     //It has to be changed with current Dropbox token.
     authFile = TOKEN
-    dropboxName = "build.gradle"
-    //localPath "${project.file("build.gradle").absolutePath}"
-    localPath "E:\\DinioDinev\\Magistratura\\3 semestur\\Diplomna rabota\\Project\\build\\reports\\findbugs\\oOP2012_61206_MultipleChoiceTest.html"
+    localFilesToUpload "${project.buildDir}\\reports"
+}
+
+sendEmail {
+    message = "Your code has been checked."
+    subject = "Results"
+    toAddress = "proben12345@gmail.com"
+    host = "smtp.gmail.com"
+    port = "587"
+
 }
 
 dependencies{

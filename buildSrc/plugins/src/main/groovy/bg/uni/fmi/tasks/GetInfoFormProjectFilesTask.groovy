@@ -52,7 +52,7 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
     @TaskAction
     def getInfoFromProjectFiles() {
 
-//        //TODO Check if there is applyed ArtifactNameExtention on the project. TO be sure that FN extention exists
+       //TODO Check if there is applyed ArtifactNameExtention on the project. TO be sure that FN extention exists
         sourceFiles.each {
             if (it.isDirectory()) {
                 FileTree allZips = project.fileTree(it)

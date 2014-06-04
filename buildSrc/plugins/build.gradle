@@ -16,6 +16,10 @@ dependencies {
 
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.rockymadden.stringmetric:stringmetric-core_2.10:0.27.3'
+
+    compile 'javax.activation:activation:1.1.1'
+    compile 'javax.mail:mail:1.4.7'
+
     testCompile 'org.spockframework:spock-core:0.7-groovy-1.8'
     testCompile 'junit:junit:4.11'
 }
