@@ -52,7 +52,8 @@ class JsoupFilterReader extends FilterReader {
 
             delegate.read(cbuf, off, len)
         }
-
+		
+		@Override
         void close() {}
     }
 }

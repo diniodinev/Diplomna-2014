@@ -1,7 +1,22 @@
 apply plugin: 'groovy'
 apply plugin: 'java'
+//apply plugin: "code-quality"
 
+//apply from: '../config/quality.gradle'
+subprojects{
+    apply plugin: "codenarc"
+    configure("plugins"){
+    tasks.withType(CodeNarc).each { codeNarcTask ->
 
+        codeNarcTask.ignoreFailures = true
+        codeNarcTask.configFile = file("../../config/codenarc/codenarc.xml")
+        codeNarcTask.maxPriority1Violations	= 2
+        codeNarcTask.maxPriority2Violations	= 4
+        codeNarcTask.maxPriority3Violations 	= 7
+
+    }
+}
+}
 repositories {
     mavenCentral()
 }
@@ -24,10 +39,14 @@ dependencies {
         exclude module: "servlet-api"
     }
 }
+
+
 sourceSets {
     test {
         resources {
-          //  srcDir 'resources/test'
+           // srcDir "E:\\DinioDinev\\Magistratura\\3 semestur\\Diplomna rabota\\Project\\buildSrc\\jsoup"
         }
     }
 }
+
+

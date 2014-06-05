@@ -3,11 +3,7 @@ package bg.uni.fmi.plugins;
 import org.gradle.api.*
 import org.gradle.api.plugins.*
 import bg.uni.fmi.tasks.DeleteSrcDirTask
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-import org.gradle.api.file.FileTree
 import bg.uni.fmi.tasks.GetInfoFromProjectFilesTask
-import bg.uni.fmi.tasks.DeleteSrcDirTask
 import bg.uni.fmi.tasks.UploadDropBoxTask
 import bg.uni.fmi.tasks.SendEmailsTask
 

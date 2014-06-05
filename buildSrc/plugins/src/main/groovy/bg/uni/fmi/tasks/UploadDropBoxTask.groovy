@@ -3,15 +3,7 @@ package bg.uni.fmi.tasks;
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.Optional
-import org.gradle.api.file.FileCollection
-import org.gradle.api.file.FileTree
-import org.gradle.api.tasks.Delete;
 
-import org.gradle.api.file.FileCollection;
-import org.gradle.api.internal.ConventionTask;
-import org.gradle.api.file.FileVisitDetails
 import com.dropbox.core.DbxAuthInfo
 import com.dropbox.core.json.JsonReader;
 import com.dropbox.core.util.IOUtil
@@ -21,8 +13,6 @@ import com.dropbox.core.DbxClient
 import com.dropbox.core.DbxWriteMode
 import com.dropbox.core.DbxException
 import com.dropbox.core.DbxEntry
-import java.io.InputStream
-import java.util.Locale
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
