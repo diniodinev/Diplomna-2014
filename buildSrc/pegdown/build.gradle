@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    groovy localGroovy()
+    compile localGroovy()
     compile gradleApi()
     compile "org.pegdown:pegdown:1.1.0"
 }

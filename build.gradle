@@ -90,3 +90,7 @@ repositories {
 //    File srcDir = new File("src/")
 //    delete srcDir.listFiles() - doNotDelete
 //}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "2.0-rc-1"
+}

@@ -3,20 +3,20 @@ apply plugin: 'java'
 //apply plugin: "code-quality"
 
 //apply from: '../config/quality.gradle'
-subprojects{
-    apply plugin: "codenarc"
-    configure("plugins"){
-    tasks.withType(CodeNarc).each { codeNarcTask ->
-
-        codeNarcTask.ignoreFailures = true
-        codeNarcTask.configFile = file("../../config/codenarc/codenarc.xml")
-        codeNarcTask.maxPriority1Violations	= 2
-        codeNarcTask.maxPriority2Violations	= 4
-        codeNarcTask.maxPriority3Violations 	= 7
-
-    }
-}
-}
+//subprojects{
+//    apply plugin: "codenarc"
+//    configure("plugins"){
+//    tasks.withType(CodeNarc).each { codeNarcTask ->
+//
+//        codeNarcTask.ignoreFailures = true
+//        codeNarcTask.configFile = file("../../config/codenarc/codenarc.xml")
+//        codeNarcTask.maxPriority1Violations	= 2
+//        codeNarcTask.maxPriority2Violations	= 4
+//        codeNarcTask.maxPriority3Violations 	= 7
+//
+//    }
+//}
+//}
 repositories {
     mavenCentral()
 }
@@ -30,7 +30,9 @@ dependencies {
 
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.rockymadden.stringmetric:stringmetric-core_2.10:0.27.3'
-    testCompile 'org.spockframework:spock-core:0.7-groovy-1.8'
+    testCompile( 'org.spockframework:spock-core:0.7-groovy-2.0'){
+		exclude group:'org.codehaus.groovy'
+	}
     testCompile 'junit:junit:4.11'
 	
 	//Add  all subprojects as runtime dependencies to the root buildSrc project. 
