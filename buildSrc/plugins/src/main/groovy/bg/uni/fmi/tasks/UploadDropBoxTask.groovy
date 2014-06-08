@@ -19,7 +19,7 @@ import org.joda.time.format.DateTimeFormatter
 
 public class UploadDropBoxTask extends DefaultTask {
 
-    String DATE_PATTERN_FOR_DIRECTORIES = "yyyy-MM-dd-kk-mm-ss"
+    final String DATE_PATTERN_FOR_DIRECTORIES = "yyyy-MM-dd-kk-mm-ss"
     //Path to the file where is the token key
     @Input
     String authFile
