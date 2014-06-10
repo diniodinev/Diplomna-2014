@@ -24,6 +24,8 @@ import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Optional
 
+
+
 class XhtmlToPdf extends SourceTask {
 
     File getXhtml() {
@@ -40,8 +42,9 @@ class XhtmlToPdf extends SourceTask {
     void render() {
         def renderer = new ITextRenderer()
         renderer.setDocument(xhtml)
+		
         fonts.each {
-            renderer.fontResolver.addFont(it.absolutePath, true)
+            renderer.fontResolver.addFont(it.absolutePath,"Identity-H",false)
         }
         renderer.layout()
         pdf.withOutputStream {

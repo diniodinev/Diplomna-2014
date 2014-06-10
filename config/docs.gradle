@@ -37,26 +37,37 @@ apply plugin: "jsoup"
             inputs.file global
             apply from: global, to: task
 
-            def local = "$projectDir/$path"
-            if (file(local).exists()) {
-                inputs.file local
-                apply from: local, to: task
-            }
+//            def local = "$projectDir/$path"
+//            if (file(local).exists()) {
+//                inputs.file local
+//                apply from: local, to: task
+//            }
 			doLast{
 				println "Documentation is generated in:\n $buildDir/html/${name}.html"
 			}
 			
         }
     }
-	//println "Documentation is generated in:\n $buildDir/html/${name}.html")
-	 baseHtml.source rawHtml
+
+     baseHtml.source rawHtml
 	 task copyStyles(type:Copy){
 	     from 'src/main/style'
 		 into 'build/html/style'
 	 }
 	 
 	 baseHtml.dependsOn(copyStyles)
-	
+
+    task pdf
+
+    pdf.dependsOn task("pdfGenerate", type: XhtmlToPdf) {
+        //inputs.files filesTask
+        source "$buildDir/html/baseHtml.html"
+        pdf = file("$buildDir/userGuide.pdf")
+        fonts = fileTree("src/main/style/fonts") {
+            include "*.ttf"
+        }
+    }
+
 
 	class FileConcatTask extends SourceTask {
     @Input @Optional String joiner
