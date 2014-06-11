@@ -39,23 +39,6 @@ class CheckHTMLProblemTask extends DefaultTask {
             isSolutionFound = (htmlBody.indexOf(it.problemSolution) == -1) ? false : true
 
             println isSolutionFound
-
-//                //println JaroMetric.compare(it.problemSolution,text)
-//               println LevenshteinMetric.compare("a","aaaaaaaaaaaaaaa")
-
-            //println text.contains(it.problemSolution)
-
-//                Elements answerers = document.select("#answers .user-details a");
-//                for (Element answerer : answerers) {
-//                    System.out.println("Answerer: " + answerer.text());
-//                }
         }
-//            println "WWWWWW"
-//            println it.problemSolution
-//            println it.url
-//            println url
-//            println htmlBody
-
     }
-
 }

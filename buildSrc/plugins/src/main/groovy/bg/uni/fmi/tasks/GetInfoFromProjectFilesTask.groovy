@@ -27,8 +27,8 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
 
     def GetInfoFromProjectFilesTask() {
         project.afterEvaluate {
-            if (courseName==null) {
-                courseName=project.ext.conf
+            if (courseName == null) {
+                courseName = project.ext.conf
             }
             if (outputDir.equals('src')) {
                 outputDir = "${outputDir}/${courseName}/"
@@ -51,7 +51,7 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
     @TaskAction
     def getInfoFromProjectFiles() {
 
-       //TODO Check if there is applyed ArtifactNameExtention on the project. TO be sure that FN extention exists
+        //TODO Check if there is applyed ArtifactNameExtention on the project. TO be sure that FN extention exists
         sourceFiles.each {
             if (it.isDirectory()) {
                 FileTree allZips = project.fileTree(it)
@@ -77,9 +77,6 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
     }
 
     def extractFiles(File file, String extension) {
-//        if (courseName == null) {
-//            courseName = project.ext.conf
-//        }
         project.copy {
             from project.zipTree(file.getAbsolutePath())
             into "${outputDir}/${file.getName()}" - ".${extension}"
@@ -88,7 +85,7 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
 
     def createSourceSets(File file, String extension) {
         project.sourceSets.create("${file.getName()}" - ".${extension}".capitalize()) {
-            java{
+            java {
                 srcDirs = project.files("${outputDir}${file.getName()}" - ".${extension}")
             }
         }

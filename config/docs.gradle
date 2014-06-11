@@ -58,8 +58,9 @@ task pdf << {
 }
 
 pdf.dependsOn task("pdfGenerate", type: XhtmlToPdf) {
-    inputs.file file("$buildDir/html/baseHtml.html")
-    source "$buildDir/html/baseHtml.html"
+    def inputFile = file("$buildDir/html/baseHtml.html")
+    inputs.file inputFile
+    source inputFile
     pdf = file("$buildDir/userGuide.pdf")
     fonts = fileTree("src/main/style/fonts") {
         include "*.ttf"
