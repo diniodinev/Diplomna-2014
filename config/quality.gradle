@@ -14,6 +14,7 @@ tasks.withType(FindBugs) {
     }
 }
 pmd {
+    toolVersion = '4.3'
     ignoreFailures = true
     ruleSets = ['basic', 'braces', 'clone', 'coupling', 'codesize', 'design', 'migrating', 'naming', 'strictexception', 'strings', 'unusedcode']
 

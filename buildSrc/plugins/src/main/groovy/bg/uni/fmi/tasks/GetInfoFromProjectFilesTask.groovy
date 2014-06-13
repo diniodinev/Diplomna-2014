@@ -41,8 +41,8 @@ public class GetInfoFromProjectFilesTask extends DefaultTask {
                         createSourceSets(sourceName, ARCHIVE_TYPE)
                     }
                 } else {
-                    checkTypeExtention(sourceName, FilenameUtils.getExtension(sourceName.getName()))
-                    createSourceSets(sourceName, ARCHIVE_TYPE)
+                    checkTypeExtention(it, FilenameUtils.getExtension(it.getName()))
+                    createSourceSets(it, ARCHIVE_TYPE)
                 }
             }
         }

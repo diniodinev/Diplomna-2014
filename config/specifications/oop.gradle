@@ -5,7 +5,7 @@ targetCompatibility = '1.5'
 
 getInfo {
     //courseName = "OOP_Java"
-    sourceFiles = files(/E:\DinioDinev\Magistratura\3 semestur\Diplomna rabota\Project\src\main\resources/)
+    sourceFiles = files(file("src/main/resources"))
     //outputDir= "bin"
 }
 uploadDropbox {

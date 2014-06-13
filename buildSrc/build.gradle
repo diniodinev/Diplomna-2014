@@ -1,28 +1,23 @@
 apply plugin: 'groovy'
 apply plugin: 'java'
-//apply plugin: "code-quality"
 
-apply from: '../config/quality.gradle'
-
-subprojects{
+subprojects {
     apply plugin: "codenarc"
-    configure("plugins"){
-    tasks.withType(CodeNarc) { codeNarcTask ->
 
+    tasks.withType(CodeNarc) { codeNarcTask ->
         codeNarcTask.ignoreFailures = true
         codeNarcTask.configFile = file("../../config/codenarc/codenarc.xml")
-        codeNarcTask.maxPriority1Violations	= 2
-        codeNarcTask.maxPriority2Violations	= 4
-        codeNarcTask.maxPriority3Violations	= 7
-
+        codeNarcTask.maxPriority1Violations = 2
+        codeNarcTask.maxPriority2Violations = 4
+        codeNarcTask.maxPriority3Violations = 7
     }
 }
-}
+
 repositories {
     mavenCentral()
 }
 dependencies {
-	
+
     compile localGroovy()
     compile 'commons-io:commons-io:2.4'
     compile 'com.dropbox.core:dropbox-core-sdk:1.7.6'
@@ -31,16 +26,16 @@ dependencies {
 
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.rockymadden.stringmetric:stringmetric-core_2.10:0.27.3'
-    testCompile( 'org.spockframework:spock-core:0.7-groovy-2.0'){
-        exclude group:'org.codehaus.groovy'
+    testCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
+        exclude group: 'org.codehaus.groovy'
     }
-		
-	
+
+
     testCompile 'junit:junit:4.11'
-	
-	//Add  all subprojects as runtime dependencies to the root buildSrc project. 
-	runtime subprojects.collect { owner.project(it.path) }
-    runtime ('com.uwyn:jhighlight:1.0') {
+
+    //Add  all subprojects as runtime dependencies to the root buildSrc project.
+    runtime subprojects.collect { owner.project(it.path) }
+    runtime('com.uwyn:jhighlight:1.0') {
         exclude module: "servlet-api"
     }
 }
@@ -49,7 +44,7 @@ dependencies {
 sourceSets {
     test {
         resources {
-           // srcDir "E:\\DinioDinev\\Magistratura\\3 semestur\\Diplomna rabota\\Project\\buildSrc\\jsoup"
+            // srcDir "E:\\DinioDinev\\Magistratura\\3 semestur\\Diplomna rabota\\Project\\buildSrc\\jsoup"
         }
     }
 }

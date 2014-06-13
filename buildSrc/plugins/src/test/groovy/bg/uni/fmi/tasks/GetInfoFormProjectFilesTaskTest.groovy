@@ -36,9 +36,6 @@ public class GetInfoFromProjectFilesTaskTest extends Specification {
 
     def "check checkTypeExtention()"() {
         when:
-        //assert new File('').absolutePath+"/src/test/resources/bg/uni/fmi/tasks/UDP2012_M66666_FinalProject.zip"=="asd"
-        //E:\DinioDinev\Magistratura\3 semestur\Diplomna rabota\Project\buildSrc\src\test\resources
-        //getInfoTask.checkTypeExtention(project.file(new File('').absolutePath+"/src/test/resources/bg/uni/fmi/tasks/UDP2012_M66666_FinalProject.zip"),'zip')
         getInfoTask.checkTypeExtention(new File(''), 'zip')
 
         then:
