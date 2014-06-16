@@ -6,6 +6,7 @@ targetCompatibility = '1.5'
 getInfo {
     //courseName = "OOP_Java"
     sourceFiles = files(file("src/main/resources"))
+
     //outputDir= "bin"
 }
 uploadDropbox {
@@ -27,3 +28,4 @@ sendEmail {
 dependencies{
     compile 'junit:junit:4.11'
 }
+
