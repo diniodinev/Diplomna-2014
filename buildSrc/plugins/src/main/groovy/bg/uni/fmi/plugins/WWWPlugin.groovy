@@ -1,8 +1,7 @@
-package bg.uni.fmi.plugins;
+package bg.uni.fmi.plugins
 
-import org.gradle.api.Project
 import org.gradle.api.Plugin
-import org.gradle.api.plugins.*
+import org.gradle.api.Project
 import bg.uni.fmi.tasks.CheckHTMLProblemTask
 
 class WWWPlugin implements Plugin<Project> {

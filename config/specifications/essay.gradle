@@ -1,0 +1,30 @@
+apply plugin: 'fmi-essay'
+
+//Unrar packages
+unzip {
+    //courseName = "OOP_Java"
+    sourceFiles = files(file("src/main/resources/essay"))
+    outputDir = project.file("src/essays")
+}
+
+essaysCheck {
+    inputEncoding = "UTF-8"
+    outputEncoding = "UTF-8"
+    wordLength = 3
+    sentanceLength = 3
+    wordsPerPage = 250
+    symbolsPerPage = 2500
+
+    sources = project.fileTree(project.file("src/essays")){
+        include '**/*.html'
+    }
+
+
+
+project.fileTree(project.file("src/essays")){
+    include '**/*.html'
+}.each {println it}
+}
+
+
+

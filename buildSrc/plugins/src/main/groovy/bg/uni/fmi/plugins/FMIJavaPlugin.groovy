@@ -1,11 +1,12 @@
-package bg.uni.fmi.plugins;
+package bg.uni.fmi.plugins
 
-import org.gradle.api.*
-import org.gradle.api.plugins.*
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 import bg.uni.fmi.tasks.DeleteSrcDirTask
 import bg.uni.fmi.tasks.GetInfoFromProjectFilesTask
 import bg.uni.fmi.tasks.UploadDropBoxTask
 import bg.uni.fmi.tasks.SendEmailsTask
+import org.gradle.api.plugins.JavaPlugin
 
 
 class FMIJavaPlugin implements Plugin<Project> {

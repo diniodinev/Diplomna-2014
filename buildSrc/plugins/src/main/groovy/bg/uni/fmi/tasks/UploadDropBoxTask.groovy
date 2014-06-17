@@ -1,9 +1,8 @@
-package bg.uni.fmi.tasks;
+package bg.uni.fmi.tasks
 
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.Input
-
+import org.gradle.api.tasks.TaskAction
 import com.dropbox.core.DbxAuthInfo
 import com.dropbox.core.json.JsonReader;
 import com.dropbox.core.util.IOUtil
