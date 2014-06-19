@@ -1,18 +1,12 @@
 package bg.uni.fmi.tasks
 
+import groovy.xml.XmlUtil
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.GradleException
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
-import com.rockymadden.stringmetric.similarity.JaroMetric
-import com.rockymadden.stringmetric.similarity.LevenshteinMetric
+import org.gradle.api.tasks.TaskAction
 import org.cyberneko.html.parsers.SAXParser
-import org.gradle.api.GradleException
-
-import groovy.xml.XmlUtil
-
 
 class CheckHTMLProblemTask extends DefaultTask {
     @Input
@@ -42,3 +36,4 @@ class CheckHTMLProblemTask extends DefaultTask {
         }
     }
 }
+

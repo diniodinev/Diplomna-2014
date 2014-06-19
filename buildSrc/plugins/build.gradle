@@ -17,6 +17,8 @@ dependencies {
 
     compile 'javax.activation:activation:1.1.1'
     compile 'javax.mail:mail:1.4.7'
+    compile 'xalan:xalan:2.7.1'
+    compile 'xalan:serializer:2.7.1'
 
     //Exclude groovy 2.0.5 as transitive dependency because of conflict with groovy 2.3.2
     // which is used from Gradle version >1.12
