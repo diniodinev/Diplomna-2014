@@ -9,12 +9,12 @@ unzip {
 
 essaysCheck {
     inputEncoding = "UTF-8"
-    outputEncoding = "UTF-8"
+    outputEncoding = "UTF-16"
     wordLength = 3
     sentanceLength = 3
     wordsPerPage = 250
     symbolsPerPage = 2550
-    sources = unzip.outputs.files
+    source = unzip.outputs.files
 }
 
 

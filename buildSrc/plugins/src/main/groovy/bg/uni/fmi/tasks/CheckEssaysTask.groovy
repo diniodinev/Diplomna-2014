@@ -6,6 +6,7 @@ import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.SourceTask
 import org.jsoup.nodes.Document
 import org.jsoup.parser.Parser
 
@@ -13,7 +14,7 @@ import javax.xml.transform.TransformerFactory
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
-public class CheckEssaysTask extends DefaultTask {
+public class CheckEssaysTask extends SourceTask {
     @Input
     String inputEncoding
 
@@ -32,14 +33,12 @@ public class CheckEssaysTask extends DefaultTask {
     @Input
     Integer symbolsPerPage
 
-    @Input
-    FileCollection sources
-
     def reportPath
     @Input
     @Optional
     String getReportPath() {
         if (reportPath == null) {
+
             return "${project.buildDir}/reports/essays/"
         }
         return project.file(reportPath).getPath()
@@ -48,6 +47,7 @@ public class CheckEssaysTask extends DefaultTask {
 
     private File report = new File("${project.buildDir}/reports/essays/", 'reportEssay.xml')
     private File outPutHTML = new File(getReportPath() , "reportEssay.html")
+
 
 
     @TaskAction
@@ -70,7 +70,7 @@ public class CheckEssaysTask extends DefaultTask {
 
     def copyFiles() {
         project.copy {
-            from sources
+            from getSource()
             into "${project.buildDir}/essays/"
             include '**/*.html'
             rename { String fileName ->
@@ -123,6 +123,7 @@ public class CheckEssaysTask extends DefaultTask {
         def factory = TransformerFactory.newInstance()
         def transformer = factory.newTransformer(new StreamSource(new StringReader(project.file("src/main/xslt/essayReport.xslt").getText())))
         transformer.transform(new StreamSource(new StringReader(report.getText())), new StreamResult(new FileOutputStream(outPutHTML)))
+       println("The essays report is generated in ${outPutHTML.absolutePath}")
     }
 }
 
