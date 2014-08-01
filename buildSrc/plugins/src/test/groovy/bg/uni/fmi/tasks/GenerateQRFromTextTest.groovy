@@ -101,7 +101,6 @@ public class GenerateQRFromTextTest extends Specification {
         File testImage = project.file(new File('').absolutePath + "/src/test/resources/bg/uni/fmi/tasks/Image.PNG")
         when:
         generateQRFromTextTask.createPicture(text, qrFile)
-        println qrFile.absolutePath
         then:
         qrFile.exists() == true
         qrFile.length() == testImage.length()
