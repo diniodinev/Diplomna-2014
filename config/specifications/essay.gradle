@@ -16,17 +16,38 @@ essaysCheck {
     symbolsPerPage = 2550
     source = unzip.outputs.files
 }
-generateQRFromFiles{
-    outputQRPath= new File(project.rootProject.buildDir,"WWWWW")
+generateQRFromFiles {
+    outputQRPath = new File(project.rootProject.buildDir, "WWWWW")
     inputEncoding = "UTF-8"
-    source  = zipTree("/src/main/resources/problems/problems_qr.zip")
-    pictureType ="jpg"
+    source = zipTree("/src/main/resources/problems/problems_qr.zip")
+    pictureType = "jpg"
 }
 
 
-generateQRFromText{
+generateQRFromText {
     //pictureType ="jpg"
-    QRInfo=["Група 1":"Group1_QR_Info","Група 2  задачи. Problems":"Group2_QR_Info","Problems":"Group3_QR_Info"]
+    QRInfo = ["Група 1": "Group1_QR_Info", "Група 2  задачи. Problems": "Group2_QR_Info", "Problems": "Group3_QR_Info"]
+}
+
+generateQRVcardFromText {
+    personName = "Jhon Doe"
+    email = "john.doe@example.org"
+    address = "София Street 1, 5678 Doestown"
+    title = "Mister"
+    company = "John Doe Inc."
+    phonenumber = "1234"
+    website = "www.example.org"
+}
+
+generatePDF {
+    pageTitle = "Групи за задачите. Problems for the groups"
+    source = generateQRFromText.outputs.files
+    picturesPerRow = 6
+    repeatTimes = 100
+    useDefaultFonts = false
+    fontToRegister = ["${project.rootDir}/src/main/style/fonts/Azbuka04.ttf": 'Azbuka04.ttf']
+
+
 }
 //project.copy {
 //    from project.zipTree(file.getAbsolutePath())

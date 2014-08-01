@@ -21,6 +21,7 @@ dependencies {
 
     compile 'net.glxn:qrgen:1.4'
     compile  'commons-io:commons-io:1.4'
+    compile 'com.itextpdf:itextpdf:5.5.2'
 
     //Exclude groovy 2.0.5 as transitive dependency because of conflict with groovy 2.3.2
     // which is used from Gradle version >1.12

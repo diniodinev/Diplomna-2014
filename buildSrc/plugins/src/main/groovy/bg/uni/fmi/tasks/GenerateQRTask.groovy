@@ -8,7 +8,7 @@ import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.GradleException
 import net.glxn.qrgen.QRCode
 import net.glxn.qrgen.image.ImageType
-import net.glxn.qrgen.vcard.VCard
+
 
 public abstract class GenerateQRTask extends DefaultTask {
 
@@ -16,10 +16,16 @@ public abstract class GenerateQRTask extends DefaultTask {
     String outputEncoding = "UTF-8"
 
     @OutputDirectory
-    def outputQRPath = new File('build/essays/QR')
+    def outputQRPath = new File('build/essays/QR/')
 
     @Optional
     String pictureType = "PNG"
+
+    @Input
+    pictureHeight = 100
+
+    @Input
+    pictureWidth = 100
 
     @TaskAction
     def generate() {
@@ -27,18 +33,7 @@ public abstract class GenerateQRTask extends DefaultTask {
        // generateVcard()
     }
 
-    def generatePicture() {
-    }
-
-    def generateVcard() {
-        VCard johnSpecial = new VCard("Jöhn Dɵe")
-                .setAddress("ëåäöƞ Sträät 1, 1234 Döestüwn")
-        File vCard = QRCode.from(johnSpecial).withCharset("UTF-8").file()
-        project.copy {
-            from vCard
-            into "C:\\"
-        }
-    }
+    abstract def generatePicture();
 
     def getOutputQRPath() {
         project.file(outputQRPath)
@@ -49,8 +44,8 @@ public abstract class GenerateQRTask extends DefaultTask {
      * @param text which will be transformed in QR content
      * @param outputFile The file where the QR will be recorded
      */
-    def createPicture(String text, File outputFile){
-        ByteArrayOutputStream stream = QRCode.from(text).to(getImageType()).withCharset(outputEncoding).stream()
+    def createPicture(def text, File outputFile){
+        ByteArrayOutputStream stream = QRCode.from(text).withSize(pictureHeight, pictureWidth).to(getImageType()).withCharset(outputEncoding).stream()
         FileOutputStream fileOutputStream = new FileOutputStream(outputFile)
         stream.writeTo(fileOutputStream)
     }

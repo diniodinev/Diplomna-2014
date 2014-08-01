@@ -2,7 +2,6 @@ package bg.uni.fmi.tasks
 
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import net.glxn.qrgen.vcard.VCard
 
 public class GenerateQRFromTextTask extends GenerateQRTask {
     /**

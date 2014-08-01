@@ -1,16 +1,14 @@
 package bg.uni.fmi.tasks
 
+import org.gradle.api.GradleException
+import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import bg.uni.fmi.plugins.EssayPlugin
-import org.gradle.api.GradleException
 import spock.lang.Specification
 import spock.lang.Shared
-import org.gradle.api.Project
-import bg.uni.fmi.tasks.GenerateQRFromTextTask
 import net.glxn.qrgen.image.ImageType
-import org.junit.rules.TemporaryFolder
 
 public class GenerateQRFromTextTest extends Specification {
     @Shared
@@ -96,12 +94,13 @@ public class GenerateQRFromTextTest extends Specification {
         String text = "Група 2  задачи. Problems"
         String fileName = "Group2_QR_Info"
         generateQRFromTextTask.pictureType = "PNG"
+        generateQRFromTextTask.pictureHeight = 125
+        generateQRFromTextTask.pictureWidth = 125
         ImageType imageType = generateQRFromTextTask.getImageType()
         File qrFile = testFolder.newFile("${fileName}.${generateQRFromTextTask.pictureType}")
         File testImage = project.file(new File('').absolutePath + "/src/test/resources/bg/uni/fmi/tasks/Image.PNG")
         when:
         generateQRFromTextTask.createPicture(text, qrFile)
-        println qrFile.absolutePath
         then:
         qrFile.exists() == true
         qrFile.length() == testImage.length()

@@ -5,6 +5,8 @@ import bg.uni.fmi.tasks.CleanEssays;
 import bg.uni.fmi.tasks.UnzipFilesTask;
 import bg.uni.fmi.tasks.GenerateQRFromTextTask;
 import bg.uni.fmi.tasks.GenerateQRFromFilesTask;
+import bg.uni.fmi.tasks.GeneratePDFTask;
+import bg.uni.fmi.tasks.GenerateQRVCardFromTextTask;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -16,6 +18,9 @@ public class EssayPlugin implements Plugin<Project> {
     public static final String CLEAN_ESSAY_TASK_NAME = "essaysClean";
     public static final String GENERATE_QR_FROM_FILES_TASK_NAME = "generateQRFromFiles";
     public static final String GENERATE_QR_FROM_TEXT_TASK_NAME = "generateQRFromText";
+    public static final String GENERATE_QR_VCARD_FROM_TEXT_TASK_NAME = "generateQRVcardFromText";
+    public static final String GENERATE_PDF_TASK_NAME = "generatePDF";
+    //GeneratePDFTask111
 
 
     @Override
@@ -39,6 +44,14 @@ public class EssayPlugin implements Plugin<Project> {
         GenerateQRFromTextTask generateQRFromText = project.getTasks().create(GENERATE_QR_FROM_TEXT_TASK_NAME, GenerateQRFromTextTask.class);
         generateQRFromText.setDescription("Generate QR code from text");
         generateQRFromText.setGroup("essay");
+
+        GenerateQRVCardFromTextTask generateQRVcardFromText = project.getTasks().create(GENERATE_QR_VCARD_FROM_TEXT_TASK_NAME, GenerateQRVCardFromTextTask.class);
+        generateQRVcardFromText.setDescription("Generate VCard QR code from text");
+        generateQRVcardFromText.setGroup("essay");
+
+        GeneratePDFTask generatePDF = project.getTasks().create(GENERATE_PDF_TASK_NAME, GeneratePDFTask.class);
+        generatePDF.setDescription("Generate PDF file");
+        generatePDF.setGroup("essay");
     }
 }
 
