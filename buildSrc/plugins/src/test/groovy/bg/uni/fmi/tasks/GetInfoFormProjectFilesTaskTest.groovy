@@ -1,6 +1,6 @@
 package bg.uni.fmi.tasks
 
-import org.gradle.api.GradleException;
+import org.gradle.api.GradleException
 import spock.lang.Specification
 import spock.lang.Shared
 import org.gradle.api.Project

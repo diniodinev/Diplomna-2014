@@ -1,12 +1,10 @@
 package bg.uni.fmi.tasks
 
 import groovy.xml.StreamingMarkupBuilder
-import org.gradle.api.DefaultTask
-import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
-import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.SourceTask
+import org.gradle.api.tasks.TaskAction
 import org.jsoup.nodes.Document
 import org.jsoup.parser.Parser
 
@@ -44,11 +42,8 @@ public class CheckEssaysTask extends SourceTask {
         return project.file(reportPath).getPath()
     }
 
-
     private File report = new File("${project.buildDir}/reports/essays/", 'reportEssay.xml')
     private File outPutHTML = new File(getReportPath() , "reportEssay.html")
-
-
 
     @TaskAction
     void checkEssays() {
@@ -57,8 +52,6 @@ public class CheckEssaysTask extends SourceTask {
         checkFiles()
         transform()
     }
-
-
 
     def createReport() {
         new File("${project.buildDir}/reports/essays/").mkdirs()
@@ -123,7 +116,7 @@ public class CheckEssaysTask extends SourceTask {
         def factory = TransformerFactory.newInstance()
         def transformer = factory.newTransformer(new StreamSource(new StringReader(project.file("src/main/xslt/essayReport.xslt").getText())))
         transformer.transform(new StreamSource(new StringReader(report.getText())), new StreamResult(new FileOutputStream(outPutHTML)))
-       println("The essays report is generated in ${outPutHTML.absolutePath}")
+        logger.quiet "The essays report is generated in ${outPutHTML.absolutePath}"
     }
 }
 

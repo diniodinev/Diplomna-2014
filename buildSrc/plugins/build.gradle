@@ -7,7 +7,6 @@ repositories {
 dependencies {
     compile localGroovy()
     compile gradleApi()
-    compile 'commons-io:commons-io:2.4'
     compile 'com.dropbox.core:dropbox-core-sdk:1.7.6'
     compile 'joda-time:joda-time:2.3'
     compile 'net.sourceforge.nekohtml:nekohtml:1.9.19'
@@ -20,10 +19,23 @@ dependencies {
     compile 'xalan:xalan:2.7.1'
     compile 'xalan:serializer:2.7.1'
 
+    compile 'net.glxn:qrgen:1.4'
+    compile  'commons-io:commons-io:1.4'
+
     //Exclude groovy 2.0.5 as transitive dependency because of conflict with groovy 2.3.2
     // which is used from Gradle version >1.12
     testCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
         exclude group: 'org.codehaus.groovy'
     }
     testCompile 'junit:junit:4.11'
+
+    test {
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat 'full'
+        }
+
+        forkEvery = 5
+        maxParallelForks = Runtime.runtime.availableProcessors() / 2
+    }
 }
