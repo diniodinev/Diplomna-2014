@@ -16,7 +16,7 @@ public abstract class GenerateQRTask extends DefaultTask {
     String outputEncoding = "UTF-8"
 
     @OutputDirectory
-    def outputQRPath = new File('build/essays/QR/')
+    def outputQRPath = new File('build/QR/')
 
     @Optional
     String pictureType = "PNG"

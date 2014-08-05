@@ -34,7 +34,7 @@ public class GeneratePDFTask extends SourceTask {
     String pdfFileName = "generatedPdf"
 
     @OutputDirectory
-    def outputPDFPath = new File('build/essays/pdf')
+    def outputPDFPath = new File('build/pdf')
 
     @OutputFile
     @Optional

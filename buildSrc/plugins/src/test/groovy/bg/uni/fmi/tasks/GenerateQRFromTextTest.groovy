@@ -77,7 +77,7 @@ public class GenerateQRFromTextTest extends Specification {
 
     def 'checkDefaultOutputQRPath'() {
         expect:
-        generateQRFromTextTask.outputQRPath == project.file('build/essays/QR')
+        generateQRFromTextTask.outputQRPath == project.file('build/QR')
     }
 
     def 'change default outputQRPath dir'() {

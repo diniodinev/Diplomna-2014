@@ -19,7 +19,7 @@ essaysCheck {
 generateQRFromFiles {
     outputQRPath = new File(project.rootProject.buildDir, "WWWWW")
     inputEncoding = "UTF-8"
-    source = zipTree("/src/main/resources/problems/problems_qr.zip")
+    source = zipTree(project.file(project.rootDir).path+"/src/main/resources/problems/problems_qr.zip")
     pictureType = "jpg"
 }
 
