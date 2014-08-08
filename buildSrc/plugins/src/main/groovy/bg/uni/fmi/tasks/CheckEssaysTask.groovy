@@ -64,7 +64,7 @@ public class CheckEssaysTask extends SourceTask {
     def copyFiles() {
         project.copy {
             from getSource()
-            into "${project.buildDir}/essays/"
+            into "${project.buildDir}/essays/works"
             include '**/*.html'
             rename { String fileName ->
                 fileName.replace('html', 'txt')
@@ -74,7 +74,7 @@ public class CheckEssaysTask extends SourceTask {
     }
 
     def checkFiles() {
-        project.fileTree("${project.buildDir}/essays/").each { currectFile ->
+        project.fileTree("${project.buildDir}/essays/works").each { currectFile ->
             Document document = org.jsoup.Jsoup.parse(currectFile.getText(getInputEncoding()), "", Parser.xmlParser())
             document.outputSettings().charset(getOutputEncoding())
             project.file(currectFile).setText(document.body().text(), outputEncoding)

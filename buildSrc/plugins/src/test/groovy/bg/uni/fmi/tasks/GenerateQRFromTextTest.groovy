@@ -24,48 +24,48 @@ public class GenerateQRFromTextTest extends Specification {
         generateQRFromTextTask = project.tasks.create(EssayPlugin.GENERATE_QR_FROM_TEXT_TASK_NAME, GenerateQRFromTextTask)
     }
 
-    def 'checkDefaultPictureType'() {
+    def 'checkDefaultImageType'() {
         expect:
         generateQRFromTextTask.getImageType() == ImageType.PNG
     }
 
-    def 'checkPictureTypes'() {
+    def 'checkImageTypes'() {
         when:
-        generateQRFromTextTask.pictureType = 'PNG'
+        generateQRFromTextTask.imageType = 'PNG'
         then:
         generateQRFromTextTask.getImageType() == ImageType.PNG
 
         when:
-        generateQRFromTextTask.pictureType = 'JPG'
+        generateQRFromTextTask.imageType = 'JPG'
         then:
         generateQRFromTextTask.getImageType() == ImageType.JPG
 
         when:
-        generateQRFromTextTask.pictureType = 'GIF'
+        generateQRFromTextTask.imageType = 'GIF'
         then:
         generateQRFromTextTask.getImageType() == ImageType.GIF
 
         when:
-        generateQRFromTextTask.pictureType = 'png'
+        generateQRFromTextTask.imageType = 'png'
         then:
         generateQRFromTextTask.getImageType() == ImageType.PNG
 
         when:
-        generateQRFromTextTask.pictureType = 'jpg'
+        generateQRFromTextTask.imageType = 'jpg'
         then:
         generateQRFromTextTask.getImageType() == ImageType.JPG
 
         when:
-        generateQRFromTextTask.pictureType = 'gif'
+        generateQRFromTextTask.imageType = 'gif'
         then:
         generateQRFromTextTask.getImageType() == ImageType.GIF
 
         when:
-        generateQRFromTextTask.pictureType = 'bmp'
+        generateQRFromTextTask.imageType = 'bmp'
         generateQRFromTextTask.getImageType()
         then:
         GradleException e = thrown()
-        assert e.message == 'As pictureType you can specify only - PNG,JPG or GIF'
+        assert e.message == 'As imageType you can specify only - PNG,JPG or GIF'
 
 
     }
@@ -77,7 +77,7 @@ public class GenerateQRFromTextTest extends Specification {
 
     def 'checkDefaultOutputQRPath'() {
         expect:
-        generateQRFromTextTask.outputQRPath == project.file('build/QR')
+        generateQRFromTextTask.outputQRPath == project.file('build/essays/QR')
     }
 
     def 'change default outputQRPath dir'() {
@@ -93,11 +93,11 @@ public class GenerateQRFromTextTest extends Specification {
         given:
         String text = "Група 2  задачи. Problems"
         String fileName = "Group2_QR_Info"
-        generateQRFromTextTask.pictureType = "PNG"
+        generateQRFromTextTask.imageType = "PNG"
         generateQRFromTextTask.pictureHeight = 125
         generateQRFromTextTask.pictureWidth = 125
         ImageType imageType = generateQRFromTextTask.getImageType()
-        File qrFile = testFolder.newFile("${fileName}.${generateQRFromTextTask.pictureType}")
+        File qrFile = testFolder.newFile("${fileName}.${generateQRFromTextTask.imageType}")
         File testImage = project.file(new File('').absolutePath + "/src/test/resources/bg/uni/fmi/tasks/Image.PNG")
         when:
         generateQRFromTextTask.createPicture(text, qrFile)
@@ -107,6 +107,12 @@ public class GenerateQRFromTextTest extends Specification {
         compareFiles(qrFile, testImage)
     }
 
+    def 'check outputPath'() {
+        when:
+            def outputPath = generateQRFromTextTask.getOutputQRPath()
+        then:
+            assert  outputPath instanceof File
+    }
     /**
      * Compare two files
      * @param first The first file which will be compared

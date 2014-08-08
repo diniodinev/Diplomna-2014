@@ -2,7 +2,8 @@ apply plugin: 'groovy'
 apply plugin: 'java'
 
 subprojects {
-    apply plugin: "codenarc"
+    apply plugin: 'codenarc'
+    apply plugin: 'cobertura'
 
     tasks.withType(CodeNarc) { codeNarcTask ->
         codeNarcTask.ignoreFailures = true
@@ -11,6 +12,7 @@ subprojects {
         codeNarcTask.maxPriority2Violations = 4
         codeNarcTask.maxPriority3Violations = 7
     }
+    tasks.getByName('check').dependsOn('cobertura')
 }
 
 repositories {
@@ -41,13 +43,11 @@ dependencies {
     }
 }
 
-
-sourceSets {
-    test {
-        resources {
-            // srcDir "E:\\DinioDinev\\Magistratura\\3 semestur\\Diplomna rabota\\Project\\buildSrc\\jsoup"
-        }
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'net.saliman:gradle-cobertura-plugin:2.2.0'
     }
 }
-
-

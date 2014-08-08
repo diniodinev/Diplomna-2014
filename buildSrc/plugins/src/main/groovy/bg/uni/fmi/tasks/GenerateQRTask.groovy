@@ -16,26 +16,25 @@ public abstract class GenerateQRTask extends DefaultTask {
     String outputEncoding = "UTF-8"
 
     @OutputDirectory
-    def outputQRPath = new File('build/QR/')
+    def outputQRPath = new File('build/essays/QR/')
 
     @Optional
-    String pictureType = "PNG"
+    String imageType = "PNG"
 
     @Input
-    pictureHeight = 100
+    Integer pictureHeight = 100
 
     @Input
-    pictureWidth = 100
+    Integer pictureWidth = 100
 
     @TaskAction
     def generate() {
           generatePicture()
-       // generateVcard()
     }
 
     abstract def generatePicture();
 
-    def getOutputQRPath() {
+    File getOutputQRPath() {
         project.file(outputQRPath)
     }
 
@@ -51,12 +50,12 @@ public abstract class GenerateQRTask extends DefaultTask {
     }
 
     /**
-     * Get method for property pictureType
-     * @return PNG, JPG or GIF. If pictureType is not specified the default is PNG. IF other type is specified
+     * Get method for property imageType
+     * @return PNG, JPG or GIF. If imageType is not specified the default is PNG. IF other type is specified
      * GradleException will be thrown
      */
     def getImageType() {
-        switch (pictureType.toUpperCase()) {
+        switch (imageType.toUpperCase()) {
             case "PNG": ImageType.PNG
                 break
             case "JPG": ImageType.JPG
@@ -64,7 +63,7 @@ public abstract class GenerateQRTask extends DefaultTask {
             case "GIF": ImageType.GIF
                 break
             default:
-                throw new GradleException('As pictureType you can specify only - PNG,JPG or GIF')
+                throw new GradleException('As imageType you can specify only - PNG,JPG or GIF')
         }
     }
 }

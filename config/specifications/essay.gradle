@@ -17,10 +17,10 @@ essaysCheck {
     source = unzip.outputs.files
 }
 generateQRFromFiles {
-    outputQRPath = new File(project.rootProject.buildDir, "WWWWW")
+    // outputQRPath = new File(project.rootProject.buildDir, "WWWWW")
     inputEncoding = "UTF-8"
-    source = zipTree(project.file(project.rootDir).path+"/src/main/resources/problems/problems_qr.zip")
-    pictureType = "jpg"
+    source = zipTree(project.file(project.rootDir).path + "/src/main/resources/problems/problems_qr.zip")
+    imageType = "jpg"
 }
 
 
@@ -49,7 +49,3 @@ generatePDF {
 
 
 }
-//project.copy {
-//    from project.zipTree(file.getAbsolutePath())
-//    into "${outputDir.absolutePath}/${file.getName()}" - ".${extension}"
-//}

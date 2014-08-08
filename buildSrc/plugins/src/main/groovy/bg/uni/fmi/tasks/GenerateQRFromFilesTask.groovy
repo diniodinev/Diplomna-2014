@@ -22,17 +22,4 @@ public class GenerateQRFromFilesTask extends GenerateQRTask {
             createPicture(currentFile.getText(inputEncoding), new File(getOutputQRPath(), "${FilenameUtils.removeExtension(currentFile.getName()) + '.' + getImageType()}"))
         }
     }
-
-    def getImageType() {
-        switch (pictureType.toUpperCase()) {
-            case "PNG": ImageType.PNG
-                break
-            case "JPG": ImageType.JPG
-                break
-            case "GIF": ImageType.GIF
-                break
-            default:
-                throw GradleExeption("As pictureType you can specify only: PNG,JPG or GIF")
-        }
-    }
 }
