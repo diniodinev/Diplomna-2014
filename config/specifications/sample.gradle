@@ -1,0 +1,6 @@
+apply plugin: 'fmi-hello'
+
+helloTask{
+    personName = 'Anderson'
+    title = 'Mr'
+}

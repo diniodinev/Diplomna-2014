@@ -23,6 +23,7 @@ dependencies {
     compile 'net.glxn:qrgen:1.4'
     compile 'commons-io:commons-io:1.4'
     compile 'com.itextpdf:itextpdf:5.5.2'
+    compile 'commons-lang:commons-lang:2.6'
 
     //Exclude groovy 2.0.5 as transitive dependency because of conflict with groovy 2.3.2
     // which is used from Gradle version >1.12
@@ -41,6 +42,7 @@ dependencies {
         maxParallelForks = (Runtime.runtime.availableProcessors() == 1) ? 1 : (Runtime.runtime.availableProcessors() / 2)
     }
 }
+
 
 
 

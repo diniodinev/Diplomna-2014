@@ -20,8 +20,6 @@ public class EssayPlugin implements Plugin<Project> {
     public static final String GENERATE_QR_FROM_TEXT_TASK_NAME = "generateQRFromText";
     public static final String GENERATE_QR_VCARD_FROM_TEXT_TASK_NAME = "generateQRVcardFromText";
     public static final String GENERATE_PDF_TASK_NAME = "generatePDF";
-    //GeneratePDFTask111
-
 
     @Override
     public void apply(Project project) {

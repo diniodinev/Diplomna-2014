@@ -1,7 +1,8 @@
-apply plugin: 'groovy'
+
 apply plugin: 'java'
 
 subprojects {
+    apply plugin: 'groovy'
     apply plugin: 'codenarc'
     apply plugin: 'cobertura'
 
@@ -37,7 +38,8 @@ dependencies {
     testCompile 'junit:junit:4.11'
 
     //Add  all subprojects as runtime dependencies to the root buildSrc project.
-    runtime subprojects.collect { owner.project(it.path) }
+    runtime subprojects.collect { owner.project(it.path)}
+
     runtime('com.uwyn:jhighlight:1.0') {
         exclude module: "servlet-api"
     }
@@ -50,4 +52,13 @@ buildscript {
     dependencies {
         classpath 'net.saliman:gradle-cobertura-plugin:2.2.0'
     }
+}
+
+task groovydoc(type: Groovydoc,overwrite: true) {
+    docTitle "FMI Help System Documentation"
+    windowTitle "FMI Help System Documentation"
+    destinationDir file("build/groovydoc/")
+    source subprojects.groovydoc.source
+    classpath = files(subprojects.groovydoc.classpath)
+    groovyClasspath = project(":plugins").groovydoc.groovyClasspath
 }
