@@ -12,7 +12,7 @@ import org.gradle.api.Project;
 
 
 
-public class EssayPlugin implements Plugin<Project> {
+public class  EssayPlugin implements Plugin<Project> {
     public static final String UNZIP_TASK_NAME = "unzip";
     public static final String CHECK_ESSAY_TASK_NAME = "essaysCheck";
     public static final String CLEAN_ESSAY_TASK_NAME = "essaysClean";
