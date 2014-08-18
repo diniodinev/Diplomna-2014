@@ -1,6 +1,4 @@
 apply plugin: 'groovy'
-apply plugin: 'java'
-
 
 repositories {
     mavenCentral()
@@ -42,6 +40,8 @@ dependencies {
         maxParallelForks = (Runtime.runtime.availableProcessors() == 1) ? 1 : (Runtime.runtime.availableProcessors() / 2)
     }
 }
+
+
 
 
 
