@@ -18,3 +18,7 @@ deploy:
   on:
     tags: true
 
+branches:
+    only:
+    - master
+    - /v\d+\.\d+[a-z]/
