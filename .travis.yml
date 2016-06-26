@@ -9,4 +9,13 @@ before_install:
  
 script:
   - ./gradlew clean build -i --continue
+  
+deploy:
+  provider: releases
+  api_key: ecddac6bad183a188b3287c11b2fb3b23aac08f0""
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
 
